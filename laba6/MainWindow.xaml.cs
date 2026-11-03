@@ -18,12 +18,6 @@ namespace WpfApp
             products.Add(new Product { Id = 1, Name = "Яблоки", Price = 370, Description = "Сочные яблоки", Count = 140, ImagePath = "apple.jpg" });
             products.Add(new Product { Id = 2, Name = "Виноград", Price = 370, Description = "Зеленый", Count = 270, ImagePath = "grapes.jpg" });
 
-            RefreshList();
-        }
-
-        private void RefreshList()
-        {
-            ProductList.ItemsSource = null;
             ProductList.ItemsSource = products;
         }
 
@@ -44,10 +38,14 @@ namespace WpfApp
 
             if (win.ShowDialog() == true)
             {
-                Product newProd = win.EditableProduct;
-                newProd.Id = products.Count + 1;
-                products.Add(newProd);
-                RefreshList();
+                var newProd = win.EditableProduct;
+
+                if (newProd != null)
+                {
+                    newProd.Id = products.Count + 1;
+                    products.Add(newProd);
+                    ProductList.Items.Refresh();
+                }
             }
         }
 
@@ -55,7 +53,7 @@ namespace WpfApp
         {
             if (selectedProduct == null) return;
 
-            ProductWindow win = new ProductWindow();
+            var win = new ProductWindow();
             win.Title = "Редактирование товара";
             win.EditableProduct = selectedProduct;
 
@@ -68,7 +66,7 @@ namespace WpfApp
 
             if (win.ShowDialog() == true)
             {
-                RefreshList();
+                ProductList.Items.Refresh();
             }
         }
 
@@ -80,7 +78,7 @@ namespace WpfApp
                 selectedProduct = null;
                 DeleteButton.IsEnabled = false;
                 EditButton.IsEnabled = false;
-                RefreshList();
+                ProductList.Items.Refresh();
             }
         }
     }

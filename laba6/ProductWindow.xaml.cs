@@ -45,8 +45,8 @@ namespace WpfApp
             EditableProduct.Count = count;
             EditableProduct.ImagePath = ImageBox.Text;
 
-            this.DialogResult = true; // Говорим главному окну, что всё ок
-            this.Close();
+            DialogResult = true; // Говорим главному окну, что всё ок
+            Close();
         }
     }
 }
